@@ -1,0 +1,60 @@
+<%= form_with(model: product, class: "p-4 bg-white rounded-4 shadow-sm border") do |form| %>
+  <% if product.errors.any? %>
+    <div class="alert alert-danger rounded-4">
+      <h6 class="fw-bold"><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h6>
+      <ul class="mb-0 fs-7">
+        <% product.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <%= form.label :name, class: "form-label fw-bold" %>
+      <%= form.text_field :name, class: "form-control rounded-3", placeholder: "e.g. Whole Wheat Bread" %>
+    </div>
+
+    <div class="col-md-6">
+      <%= form.label :product_id, "Product ID", class: "form-label fw-bold" %>
+      <%= form.text_field :product_id, class: "form-control rounded-3", placeholder: "e.g. P1001" %>
+    </div>
+
+    <div class="col-md-4">
+      <%= form.label :price, class: "form-label fw-bold" %>
+      <div class="input-group">
+        <span class="input-group-text bg-light rounded-start-3">$</span>
+        <%= form.number_field :price, step: :any, class: "form-control rounded-end-3", placeholder: "0.00" %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <%= form.label :stock, class: "form-label fw-bold" %>
+      <%= form.number_field :stock, class: "form-control rounded-3", placeholder: "Quantity in stock" %>
+    </div>
+
+    <div class="col-md-4">
+      <%= form.label :tax_percentage, "Tax %", class: "form-label fw-bold" %>
+      <div class="input-group">
+        <%= form.number_field :tax_percentage, step: :any, class: "form-control rounded-start-3", placeholder: "GST/VAT %" %>
+        <span class="input-group-text bg-light rounded-end-3">%</span>
+      </div>
+    </div>
+
+    <div class="col-12 mt-5">
+      <div class="d-flex gap-2">
+        <%= form.submit "Save Product", class: "btn btn-primary px-5 rounded-pill" %>
+        <%= link_to "Cancel", products_path, class: "btn btn-light px-4 rounded-pill" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<style>
+  .fs-7 { font-size: 0.85rem; }
+  .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1);
+  }
+</style>

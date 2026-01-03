@@ -1,0 +1,194 @@
+<div class="billing-wrapper py-5">
+  <div class="billing-container mx-auto p-4 position-relative" data-controller="billing">
+    <div class="position-absolute top-0 end-0 p-3">
+      <%= link_to "View Previous Purchases", purchases_path, class: "btn btn-sm btn-link text-decoration-none" %>
+    </div>
+    <h2 class="text-center mb-5 fw-bold">Billing Page</h2>
+
+    <%= form_with url: bills_path, method: :post, local: true, data: { turbo: false } do |f| %>
+      
+      <div class="row mb-4 align-items-center">
+        <div class="col-3">
+          <label class="fw-bold">Customer Email</label>
+        </div>
+        <div class="col-4">
+          <%= f.email_field :customer_email, class: "form-control custom-input", placeholder: "Email ID", required: true %>
+        </div>
+      </div>
+
+      <div class="bill-section-header d-flex justify-content-end mb-2">
+        <button type="button" class="btn btn-secondary add-new-btn" id="add-item-button" data-action="billing#addItem">Add New</button>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-2 fw-bold">Bill section</div>
+        <div class="col-10">
+          <div data-billing-target="items" id="bill-items-container">
+            <div class="row g-2 mb-2 bill-item align-items-center">
+              <div class="col-5">
+                <input type="text" name="items[0][product_id]" class="form-control custom-input text-center" placeholder="Product ID" required>
+              </div>
+              <div class="col-5">
+                <input type="number" name="items[0][quantity]" class="form-control custom-input text-center" placeholder="Quantity" min="1" required>
+              </div>
+              <div class="col-2">
+                <button type="button" class="btn btn-outline-danger btn-sm border-0 remove-item-button" data-action="billing#removeItem">×</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-5 divider">
+
+      <div class="row mb-4">
+        <div class="col-3">
+          <h5 class="fw-bold">Denominations</h5>
+          <%# <button type="button" class="btn btn-sm btn-outline-secondary mt-2" id="add-denom-button">Add New </button> %>
+        </div>
+        <div class="col-5">
+          <div id="denominations-container">
+            <% [500, 50, 20, 10, 5, 2, 1].each_with_index do |val, index| %>
+              <div class="row align-items-center mb-2 denom-item">
+                <div class="col-4">
+                  <input type="number" name="denominations[<%= index %>][value]" value="<%= val %>" class="form-control custom-input text-center denom-value" readonly>
+                </div>
+                <div class="col-6">
+                  <input type="number" name="denominations[<%= index %>][count]" class="form-control custom-input text-center denom-count" placeholder="Count" min="0">
+                </div>
+                <div class="col-2">
+                  <button type="button" class="btn btn-outline-danger btn-sm border-0 remove-denom-button">×</button>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-5 mb-5 align-items-center">
+        <div class="col-3">
+          <label class="fw-bold">Cash paid by customer</label>
+        </div>
+        <div class="col-4">
+          <%= f.number_field :paid_amount, id: "paid-amount-input", class: "form-control custom-input", placeholder: "Amount", step: 0.01, required: true %>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end gap-3 mt-4">
+         <%= link_to "Cancel", purchases_path, class: "btn btn-outline-secondary px-4 custom-btn-outline" %>
+         <%= f.submit "Generate Bill", class: "btn btn-outline-success px-4 custom-btn-success" %>
+      </div>
+
+      <!-- Item Template -->
+      <template id="bill-item-template" data-billing-target="itemTemplate">
+        <div class="row g-2 mb-2 bill-item align-items-center">
+          <div class="col-5">
+            <input type="text" name="items[NEW_RECORD][product_id]" class="form-control custom-input text-center" placeholder="Product ID" required>
+          </div>
+          <div class="col-5">
+            <input type="number" name="items[NEW_RECORD][quantity]" class="form-control custom-input text-center" placeholder="Quantity" min="1" required>
+          </div>
+          <div class="col-2">
+            <button type="button" class="btn btn-outline-danger btn-sm border-0 remove-item-button">×</button>
+          </div>
+        </div>
+      </template>
+
+      <!-- Denomination Template -->
+      <template id="denom-item-template">
+        <div class="row align-items-center mb-2 denom-item">
+          <div class="col-4">
+            <input type="number" name="denominations[NEW_RECORD][value]" class="form-control custom-input text-center denom-value" placeholder="Value">
+          </div>
+          <div class="col-6">
+            <input type="number" name="denominations[NEW_RECORD][count]" class="form-control custom-input text-center denom-count" placeholder="Count" min="0">
+          </div>
+          <div class="col-2">
+            <button type="button" class="btn btn-outline-danger btn-sm border-0 remove-denom-button">×</button>
+          </div>
+        </div>
+      </template>
+
+    <% end %>
+  </div>
+</div>
+
+<style>
+  body { background-color: #a0c2f9; }
+  .billing-wrapper { min-height: 100vh; }
+  .billing-container { background: white; max-width: 900px; border: 2px solid #333; min-height: 800px; }
+  .custom-input { border: 1px solid #777; border-radius: 0; height: 38px; }
+  .custom-input::placeholder { color: #ccc; }
+  .add-new-btn { background-color: #6c757d; color: white; border: none; border-radius: 0; padding: 5px 20px; }
+  .divider { border-top: 2px solid #666; opacity: 1; }
+  .custom-btn-outline { border: 1px solid #999; border-radius: 0; color: #666; text-decoration: none; }
+  .custom-btn-success { border: 1px solid #28a745; border-radius: 0; color: #28a745; background: transparent; }
+  .custom-btn-success:hover { background-color: #28a745; color: white; }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const addButton = document.getElementById("add-item-button");
+    const itemContainer = document.getElementById("bill-items-container");
+    const itemTemplate = document.getElementById("bill-item-template");
+
+    const addDenomButton = document.getElementById("add-denom-button");
+    const denomContainer = document.getElementById("denominations-container");
+    const denomTemplate = document.getElementById("denom-item-template");
+
+    const paidAmountInput = document.getElementById("paid-amount-input");
+
+    function updateTotal() {
+        let total = 0;
+        document.querySelectorAll(".denom-item").forEach(row => {
+            const value = parseFloat(row.querySelector(".denom-value").value || 0);
+            const count = parseFloat(row.querySelector(".denom-count").value || 0);
+            total += value * count;
+        });
+        paidAmountInput.value = total.toFixed(2);
+    }
+
+    // Bill Items Logic
+    if (addButton && itemContainer && itemTemplate) {
+      addButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        const content = itemTemplate.innerHTML.replace(/NEW_RECORD/g, Date.now());
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = content.trim();
+        itemContainer.appendChild(tempDiv.firstChild);
+      });
+
+      itemContainer.addEventListener("click", function(e) {
+        if (e.target.closest(".remove-item-button")) {
+          e.preventDefault();
+          e.target.closest(".bill-item").remove();
+        }
+      });
+    }
+
+    // Denominations Logic
+    if (addDenomButton && denomContainer && denomTemplate) {
+      addDenomButton.addEventListener("click", function(e) {
+        e.preventDefault();
+        const content = denomTemplate.innerHTML.replace(/NEW_RECORD/g, Date.now());
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = content.trim();
+        denomContainer.appendChild(tempDiv.firstChild);
+      });
+
+      denomContainer.addEventListener("click", function(e) {
+        if (e.target.closest(".remove-denom-button")) {
+          e.preventDefault();
+          e.target.closest(".denom-item").remove();
+          updateTotal();
+        }
+      });
+
+      denomContainer.addEventListener("input", function(e) {
+        if (e.target.classList.contains("denom-value") || e.target.classList.contains("denom-count")) {
+          updateTotal();
+        }
+      });
+    }
+  });
+</script>

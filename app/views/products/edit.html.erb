@@ -1,0 +1,16 @@
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="text-center mb-5">
+        <h1 class="fw-bold text-dark">Edit Product</h1>
+        <p class="text-secondary">Update the details for product <span class="text-primary fw-bold">#<%= @product.product_id %></span></p>
+      </div>
+
+      <%= render "form", product: @product %>
+
+      <div class="mt-4 text-center">
+        <%= link_to "Show this product", @product, class: "btn btn-link text-decoration-none text-secondary" %>
+      </div>
+    </div>
+  </div>
+</div>

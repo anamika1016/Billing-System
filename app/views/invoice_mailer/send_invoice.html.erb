@@ -1,0 +1,30 @@
+<h1>Invoice for your purchase</h1>
+<p>Hello,</p>
+<p>Thank you for your purchase. Here are your bill details:</p>
+
+<table border="1" style="border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr>
+      <th>Product ID</th>
+      <th>Unit Price</th>
+      <th>Quantity</th>
+      <th>Total Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @purchase.purchase_items.each do |item| %>
+      <tr>
+        <td><%= item.product.product_id %></td>
+        <td><%= number_to_currency(item.unit_price) %></td>
+        <td><%= item.quantity %></td>
+        <td><%= number_to_currency(item.total_price) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p><strong>Net Price:</strong> <%= number_to_currency(@purchase.net_price) %></p>
+<p><strong>Rounded Value:</strong> <%= number_to_currency(@purchase.rounded_net_price) %></p>
+<p><strong>Balance Payable:</strong> <%= number_to_currency(@purchase.balance_payable) %></p>
+
+<p>Best Regards,<br>Billing System Team</p>

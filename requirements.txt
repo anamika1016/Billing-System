@@ -1,0 +1,11 @@
+rails
+sqlite3
+puma
+importmap-rails
+turbo-rails
+stimulus-rails
+bootsnap
+debug
+web-console
+jbuilder
+bootstrap

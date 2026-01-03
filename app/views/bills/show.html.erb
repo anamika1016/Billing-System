@@ -1,0 +1,102 @@
+<div class="billing-wrapper py-5">
+  <div class="billing-container mx-auto p-4">
+    <h2 class="text-center mb-5 fw-bold">Billing Page</h2>
+
+    <div class="row mb-3">
+      <div class="col-3 fw-bold">Customer Email</div>
+      <div class="col-9 text-muted"><%= @purchase.customer_email %></div>
+    </div>
+
+    <div class="row mb-1">
+      <div class="col-3 fw-bold">Bill section</div>
+      <div class="col-9">
+        <div class="table-responsive">
+          <table class="table table-bordered text-center align-middle bill-table">
+            <thead class="bg-light fs-7">
+              <tr>
+                <th>Product ID</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Purchase Price</th>
+                <th>Tax % for item</th>
+                <th>Tax payable for item</th>
+                <th>Total price of the item</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @purchase.purchase_items.each do |item| %>
+                <tr>
+                  <td><%= item.product.product_id %></td>
+                  <td><%= number_with_precision(item.unit_price, precision: 2) %></td>
+                  <td><%= item.quantity %></td>
+                  <td><%= number_with_precision(item.purchase_price, precision: 2) %></td>
+                  <td><%= number_with_precision(item.tax_percentage, precision: 1) %></td>
+                  <td><%= number_with_precision(item.tax_payable, precision: 2) %></td>
+                  <td><%= number_with_precision(item.total_price, precision: 2) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-end mb-5">
+      <div class="col-md-7">
+        <div class="summary-table">
+          <div class="d-flex justify-content-between py-1 border-bottom">
+            <span class="fw-bold fs-7">Total price without tax:</span>
+            <span><%= number_with_precision(@purchase.total_without_tax, precision: 2) %></span>
+          </div>
+          <div class="d-flex justify-content-between py-1 border-bottom">
+            <span class="fw-bold fs-7">Total tax payable:</span>
+            <span><%= number_with_precision(@purchase.total_tax, precision: 2) %></span>
+          </div>
+          <div class="d-flex justify-content-between py-1 border-bottom">
+            <span class="fw-bold fs-7">Net price of the purchased item:</span>
+            <span><%= number_with_precision(@purchase.net_price, precision: 2) %></span>
+          </div>
+          <div class="d-flex justify-content-between py-1 border-bottom">
+            <span class="fw-bold fs-7 text-nowrap">Rounded down value of the purchased items net price:</span>
+            <span><%= number_with_precision(@purchase.rounded_net_price, precision: 2) %></span>
+          </div>
+          <div class="d-flex justify-content-between py-1 fw-bold fs-6">
+            <span>Balance payable to the customer:</span>
+            <span><%= number_with_precision(@purchase.balance_payable, precision: 2) %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider mb-4"></div>
+
+    <div class="row">
+      <div class="col-12 text-end">
+        <h5 class="fw-bold mb-3">Balance Denomination:</h5>
+        <div class="denomination-list d-inline-block text-end" style="min-width: 150px;">
+          <% @purchase.balance_denominations.each do |denom, count| %>
+            <div class="denom-row d-flex justify-content-between mb-1">
+              <span class="fw-bold me-4"><%= denom %>:</span>
+              <span><%= count %></span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center gap-3 mt-5">
+      <%= link_to "New Bill", root_path, class: "btn btn-outline-primary px-4 rounded-3" %>
+      <%= link_to "Purchases", purchases_path, class: "btn btn-outline-secondary px-4 rounded-3" %>
+    </div>
+  </div>
+</div>
+
+<style>
+  body { background-color: #a0c2f9; }
+  .billing-container { background: white; max-width: 950px; border: 2px solid #333; min-height: 800px; }
+  .bill-table th { font-weight: normal; font-size: 0.85rem; padding: 12px 5px; }
+  .bill-table td { padding: 8px 5px; font-size: 0.95rem; }
+  .summary-table span { margin-left: 20px; }
+  .divider { border-top: 2px solid #666; width: 100%; }
+  .fs-7 { font-size: 0.9rem; }
+</style>

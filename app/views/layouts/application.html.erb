@@ -45,6 +45,14 @@
         </div>
       </div>
     </nav>
+    <div class="container">
+      <% flash.each do |type, message| %>
+        <div class="alert alert-<%= type == 'error' ? 'danger' : (type == 'notice' ? 'success' : type) %>">
+          <%= message %>
+        </div>
+      <% end %>
+    </div>
     <%= yield %>
+
   </body>
 </html>

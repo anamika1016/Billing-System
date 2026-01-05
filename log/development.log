@@ -703,3 +703,58 @@ Processing by BillsController#show as HTML
 Completed 200 OK in 21ms (Views: 10.8ms | ActiveRecord: 0.3ms (4 queries, 0 cached) | GC: 0.2ms)
 
 
+  [1m[36mPurchase Load (0.1ms)[0m  [1m[34mSELECT "purchases".* FROM "purchases" ORDER BY "purchases"."id" DESC LIMIT 1 /*application='BillingSystem'*/[0m
+Started GET "/bills/5" for ::1 at 2026-01-05 11:01:48 +0530
+Processing by BillsController#show as HTML
+  Parameters: {"id" => "5"}
+  [1m[36mPurchase Load (0.1ms)[0m  [1m[34mSELECT "purchases".* FROM "purchases" WHERE "purchases"."id" = 5 LIMIT 1 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:87:in 'BillsController#show'
+  Rendering layout layouts/application.html.erb
+  Rendering bills/show.html.erb within layouts/application
+  [1m[36mPurchaseItem Load (0.1ms)[0m  [1m[34mSELECT "purchase_items".* FROM "purchase_items" WHERE "purchase_items"."purchase_id" = 5 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/views/bills/show.html.erb:27
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 6 LIMIT 1 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/views/bills/show.html.erb:29
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 7 LIMIT 1 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/views/bills/show.html.erb:29
+  Rendered bills/show.html.erb within layouts/application (Duration: 25.2ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 27.9ms | GC: 0.0ms)
+Completed 200 OK in 47ms (Views: 29.4ms | ActiveRecord: 1.4ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/bills/5" for ::1 at 2026-01-05 11:01:57 +0530
+Processing by BillsController#show as HTML
+  Parameters: {"id" => "5"}
+  [1m[36mPurchase Load (0.1ms)[0m  [1m[34mSELECT "purchases".* FROM "purchases" WHERE "purchases"."id" = 5 LIMIT 1 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:87:in 'BillsController#show'
+  Rendering layout layouts/application.html.erb
+  Rendering bills/show.html.erb within layouts/application
+  [1m[36mPurchaseItem Load (0.1ms)[0m  [1m[34mSELECT "purchase_items".* FROM "purchase_items" WHERE "purchase_items"."purchase_id" = 5 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/views/bills/show.html.erb:27
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 6 LIMIT 1 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/views/bills/show.html.erb:29
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 7 LIMIT 1 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/views/bills/show.html.erb:29
+  Rendered bills/show.html.erb within layouts/application (Duration: 7.3ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 8.2ms | GC: 0.0ms)
+Completed 200 OK in 19ms (Views: 10.4ms | ActiveRecord: 0.3ms (4 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/bills/5" for ::1 at 2026-01-05 11:03:05 +0530
+Processing by BillsController#show as HTML
+  Parameters: {"id" => "5"}
+  [1m[36mPurchase Load (0.1ms)[0m  [1m[34mSELECT "purchases".* FROM "purchases" WHERE "purchases"."id" = 5 LIMIT 1 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:87:in 'BillsController#show'
+  Rendering layout layouts/application.html.erb
+  Rendering bills/show.html.erb within layouts/application
+  [1m[36mPurchaseItem Load (0.1ms)[0m  [1m[34mSELECT "purchase_items".* FROM "purchase_items" WHERE "purchase_items"."purchase_id" = 5 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/views/bills/show.html.erb:27
+  [1m[36mProduct Load (0.0ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 6 LIMIT 1 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/views/bills/show.html.erb:29
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 7 LIMIT 1 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/views/bills/show.html.erb:29
+  Rendered bills/show.html.erb within layouts/application (Duration: 22.8ms | GC: 0.5ms)
+  Rendered layout layouts/application.html.erb (Duration: 26.7ms | GC: 0.5ms)
+Completed 200 OK in 44ms (Views: 29.2ms | ActiveRecord: 1.5ms (4 queries, 0 cached) | GC: 1.0ms)
+
+

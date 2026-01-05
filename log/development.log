@@ -758,3 +758,170 @@ Processing by BillsController#show as HTML
 Completed 200 OK in 44ms (Views: 29.2ms | ActiveRecord: 1.5ms (4 queries, 0 cached) | GC: 1.0ms)
 
 
+Started GET "/" for ::1 at 2026-01-05 11:08:15 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='BillingSystem'*/[0m
+Processing by BillsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering bills/new.html.erb within layouts/application
+  Rendered bills/new.html.erb within layouts/application (Duration: 13.7ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 27.4ms | GC: 0.0ms)
+Completed 200 OK in 73ms (Views: 30.7ms | ActiveRecord: 1.5ms (0 queries, 0 cached) | GC: 0.2ms)
+
+
+Started POST "/bills" for ::1 at 2026-01-05 11:12:14 +0530
+Processing by BillsController#create as HTML
+  Parameters: {"authenticity_token" => "[FILTERED]", "customer_email" => "[FILTERED]", "items" => {"0" => {"product_id" => "P002", "quantity" => "2"}, "1767591496770" => {"product_id" => "P004", "quantity" => "3"}, "1767591497361" => {"product_id" => "P005", "quantity" => "1"}}, "denominations" => {"0" => {"value" => "500", "count" => "2"}, "1" => {"value" => "50", "count" => "3"}, "2" => {"value" => "20", "count" => "2"}, "3" => {"value" => "10", "count" => "1"}, "4" => {"value" => "5", "count" => "2"}, "5" => {"value" => "2", "count" => "1"}, "6" => {"value" => "1", "count" => "0"}}, "paid_amount" => "900", "commit" => "Generate Bill"}
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*action='create',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:25:in 'block (2 levels) in BillsController#create'
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."product_id" = 'P002' LIMIT 1 /*action='create',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:25:in 'block (2 levels) in BillsController#create'
+  [1m[36mProduct Update (0.2ms)[0m  [1m[33mUPDATE "products" SET "stock" = 48, "updated_at" = '2026-01-05 05:42:15.019827' WHERE "products"."id" = 2 /*action='create',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:50:in 'block (2 levels) in BillsController#create'
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."product_id" = 'P004' LIMIT 1 /*action='create',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:25:in 'block (2 levels) in BillsController#create'
+  [1m[36mProduct Update (0.1ms)[0m  [1m[33mUPDATE "products" SET "stock" = 17, "updated_at" = '2026-01-05 05:42:15.047149' WHERE "products"."id" = 4 /*action='create',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:50:in 'block (2 levels) in BillsController#create'
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."product_id" = 'P005' LIMIT 1 /*action='create',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:25:in 'block (2 levels) in BillsController#create'
+  [1m[36mProduct Update (0.1ms)[0m  [1m[33mUPDATE "products" SET "stock" = 199, "updated_at" = '2026-01-05 05:42:15.057386' WHERE "products"."id" = 5 /*action='create',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:50:in 'block (2 levels) in BillsController#create'
+  [1m[36mPurchase Create (0.9ms)[0m  [1m[32mINSERT INTO "purchases" ("customer_email", "total_without_tax", "total_tax", "net_price", "paid_amount", "rounded_net_price", "balance_payable", "created_at", "updated_at", "denominations_collected") VALUES ('wamiqa@gmail.com', 1120.0, 129.6, 1249.6, 900.0, 1249, -349.0, '2026-01-05 05:42:15.074173', '2026-01-05 05:42:15.074173', '{"500":2,"50":3,"20":2,"10":1,"5":2,"2":1}') RETURNING "id" /*action='create',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:71:in 'block in BillsController#create'
+  [1m[36mPurchaseItem Create (0.3ms)[0m  [1m[32mINSERT INTO "purchase_items" ("purchase_id", "product_id", "quantity", "unit_price", "tax_percentage", "purchase_price", "tax_payable", "total_price", "created_at", "updated_at") VALUES (6, 2, 2, 25.0, 0.0, 50.0, 0.0, 50.0, '2026-01-05 05:42:15.089602', '2026-01-05 05:42:15.089602') RETURNING "id" /*action='create',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:71:in 'block in BillsController#create'
+  [1m[36mPurchaseItem Create (0.1ms)[0m  [1m[32mINSERT INTO "purchase_items" ("purchase_id", "product_id", "quantity", "unit_price", "tax_percentage", "purchase_price", "tax_payable", "total_price", "created_at", "updated_at") VALUES (6, 4, 3, 350.0, 12.0, 1050.0, 126.0, 1176.0, '2026-01-05 05:42:15.094147', '2026-01-05 05:42:15.094147') RETURNING "id" /*action='create',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:71:in 'block in BillsController#create'
+  [1m[36mPurchaseItem Create (0.4ms)[0m  [1m[32mINSERT INTO "purchase_items" ("purchase_id", "product_id", "quantity", "unit_price", "tax_percentage", "purchase_price", "tax_payable", "total_price", "created_at", "updated_at") VALUES (6, 5, 1, 20.0, 18.0, 20.0, 3.6, 23.6, '2026-01-05 05:42:15.098744', '2026-01-05 05:42:15.098744') RETURNING "id" /*action='create',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:71:in 'block in BillsController#create'
+[ActiveJob] Enqueued ActionMailer::MailDeliveryJob (Job ID: dcd58d5d-ed63-4ff3-a8ba-e815363ddc57) to Async(default) with arguments: "InvoiceMailer", "send_invoice", "deliver_now", {args: [#<GlobalID:0x00007659a9a2cf28 @uri=#<URI::GID gid://billing-system/Purchase/6>>]}
+[ActiveJob] ↳ app/controllers/bills_controller.rb:73:in 'block in BillsController#create'
+Redirected to http://localhost:3000/bills/6
+  [1m[36mTRANSACTION (1.9ms)[0m  [1m[35mCOMMIT TRANSACTION /*action='create',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:18:in 'BillsController#create'
+Completed 302 Found in 200ms (ActiveRecord: 14.6ms (10 queries, 0 cached) | GC: 0.0ms)
+
+
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   [1m[36mPurchase Load (0.6ms)[0m  [1m[34mSELECT "purchases".* FROM "purchases" WHERE "purchases"."id" = 6 LIMIT 1 /*application='BillingSystem'*/[0m
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57] Performing ActionMailer::MailDeliveryJob (Job ID: dcd58d5d-ed63-4ff3-a8ba-e815363ddc57) from Async(default) enqueued at 2026-01-05T05:42:15.128200975Z with arguments: "InvoiceMailer", "send_invoice", "deliver_now", {args: [#<GlobalID:0x00007659a98db728 @uri=#<URI::GID gid://billing-system/Purchase/6>>]}
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   Rendering layout layouts/mailer.html.erb
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   Rendering invoice_mailer/send_invoice.html.erb within layouts/mailer
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   [1m[36mPurchaseItem Load (0.1ms)[0m  [1m[34mSELECT "purchase_items".* FROM "purchase_items" WHERE "purchase_items"."purchase_id" = 6 /*application='BillingSystem',job='ActionMailer%3A%3AMailDeliveryJob'*/[0m
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   ↳ app/views/invoice_mailer/send_invoice.html.erb:15
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 2 LIMIT 1 /*application='BillingSystem',job='ActionMailer%3A%3AMailDeliveryJob'*/[0m
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   ↳ app/views/invoice_mailer/send_invoice.html.erb:17
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 4 LIMIT 1 /*application='BillingSystem',job='ActionMailer%3A%3AMailDeliveryJob'*/[0m
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   ↳ app/views/invoice_mailer/send_invoice.html.erb:17
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 5 LIMIT 1 /*application='BillingSystem',job='ActionMailer%3A%3AMailDeliveryJob'*/[0m
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   ↳ app/views/invoice_mailer/send_invoice.html.erb:17
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   Rendered invoice_mailer/send_invoice.html.erb within layouts/mailer (Duration: 28.6ms | GC: 0.0ms)
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   Rendered layout layouts/mailer.html.erb (Duration: 29.7ms | GC: 0.0ms)
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   Rendering layout layouts/mailer.text.erb
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   Rendering invoice_mailer/send_invoice.text.erb within layouts/mailer
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   Rendered invoice_mailer/send_invoice.text.erb within layouts/mailer (Duration: 0.3ms | GC: 0.0ms)
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57]   Rendered layout layouts/mailer.text.erb (Duration: 0.9ms | GC: 0.0ms)
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57] InvoiceMailer#send_invoice: processed outbound mail in 46.2ms
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57] Delivered mail 695b4f3736a29_14db8828d0-3df@papl-HP-Pavilion-x360-2-in-1-Laptop-14-ek1xxx.mail (9.5ms)
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57] Date: Mon, 05 Jan 2026 11:12:15 +0530
+From: from@example.com
+To: wamiqa@gmail.com
+Message-ID: <695b4f3736a29_14db8828d0-3df@papl-HP-Pavilion-x360-2-in-1-Laptop-14-ek1xxx.mail>
+Subject: Your Invoice - 6
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_695b4f3734ab9_14db8828d0-43";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_695b4f3734ab9_14db8828d0-43
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Invoice#send_invoice
+
+, find me in app/views/invoice_mailer/send_invoice.text.erb
+
+
+----==_mimepart_695b4f3734ab9_14db8828d0-43
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!-- BEGIN app/views/layouts/mailer.html.erb --><!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <!-- BEGIN app/views/invoice_mailer/send_invoice.html.erb --><h1>Invoice for your purchase</h1>
+<p>Hello,</p>
+<p>Thank you for your purchase. Here are your bill details:</p>
+
+<table border="1" style="border-collapse: collapse; width: 100%;">
+  <thead>
+    <tr>
+      <th>Product ID</th>
+      <th>Unit Price</th>
+      <th>Quantity</th>
+      <th>Total Price</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>P002</td>
+        <td>$25.00</td>
+        <td>2</td>
+        <td>$50.00</td>
+      </tr>
+      <tr>
+        <td>P004</td>
+        <td>$350.00</td>
+        <td>3</td>
+        <td>$1,176.00</td>
+      </tr>
+      <tr>
+        <td>P005</td>
+        <td>$20.00</td>
+        <td>1</td>
+        <td>$23.60</td>
+      </tr>
+  </tbody>
+</table>
+
+<p><strong>Net Price:</strong> $1,249.60</p>
+<p><strong>Rounded Value:</strong> $1,249.00</p>
+<p><strong>Balance Payable:</strong> -$349.00</p>
+
+<p>Best Regards,<br>Billing System Team</p>
+<!-- END app/views/invoice_mailer/send_invoice.html.erb -->
+  </body>
+</html>
+<!-- END app/views/layouts/mailer.html.erb -->
+----==_mimepart_695b4f3734ab9_14db8828d0-43--
+
+[ActiveJob] [ActionMailer::MailDeliveryJob] [dcd58d5d-ed63-4ff3-a8ba-e815363ddc57] Performed ActionMailer::MailDeliveryJob (Job ID: dcd58d5d-ed63-4ff3-a8ba-e815363ddc57) from Async(default) in 71.91ms
+Started GET "/bills/6" for ::1 at 2026-01-05 11:12:15 +0530
+Processing by BillsController#show as HTML
+  Parameters: {"id" => "6"}
+  [1m[36mPurchase Load (0.1ms)[0m  [1m[34mSELECT "purchases".* FROM "purchases" WHERE "purchases"."id" = 6 LIMIT 1 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/controllers/bills_controller.rb:87:in 'BillsController#show'
+  Rendering layout layouts/application.html.erb
+  Rendering bills/show.html.erb within layouts/application
+  [1m[36mPurchaseItem Load (0.1ms)[0m  [1m[34mSELECT "purchase_items".* FROM "purchase_items" WHERE "purchase_items"."purchase_id" = 6 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/views/bills/show.html.erb:27
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 2 LIMIT 1 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/views/bills/show.html.erb:29
+  [1m[36mProduct Load (0.0ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 4 LIMIT 1 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/views/bills/show.html.erb:29
+  [1m[36mProduct Load (0.0ms)[0m  [1m[34mSELECT "products".* FROM "products" WHERE "products"."id" = 5 LIMIT 1 /*action='show',application='BillingSystem',controller='bills'*/[0m
+  ↳ app/views/bills/show.html.erb:29
+  Rendered bills/show.html.erb within layouts/application (Duration: 17.8ms | GC: 0.0ms)
+  Rendered layout layouts/application.html.erb (Duration: 19.4ms | GC: 0.0ms)
+Completed 200 OK in 28ms (Views: 19.5ms | ActiveRecord: 0.3ms (5 queries, 0 cached) | GC: 0.0ms)
+
+
